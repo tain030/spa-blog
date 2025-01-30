@@ -56,7 +56,7 @@ const PostDetail: React.FC = () => {
   }
 
   return (
-    <article className="prose lg:prose-xl dark:prose-invert">
+    <article className="prose dark:prose-invert">
       <h1 className="text-4xl font-bold mb-4">{post.name}</h1>
       <p className="text-gray-600 dark:text-gray-400 mb-8">{post.date}</p>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />

@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { remark } from "remark";
 import html from "remark-html";
+import gfm from "remark-gfm";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,7 +58,11 @@ export const fetchPostData = async (url: string): Promise<PostData> => {
   const markdown = await response.text();
   const { metadata, content } = extractMetadata(markdown);
 
-  const processedContent = await remark().use(html).process(content);
+  const processedContent = await remark()
+    .use(gfm) // GFM 플러그인 추가
+    .use(html)
+    .process(content);
+
   const result: PostData = {
     metadata,
     content: processedContent.toString(),
