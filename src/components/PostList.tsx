@@ -45,7 +45,11 @@ const PostList: React.FC = () => {
           }),
         );
 
-        setPosts(postsWithMetadata);
+        const sortedPosts = postsWithMetadata.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        );
+
+        setPosts(sortedPosts);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching or parsing posts:", err);
