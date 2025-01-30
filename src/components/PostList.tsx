@@ -7,7 +7,6 @@ interface MetaPost {
   fileName: string;
   title: string;
   date: string;
-  excerpt: string;
   content: string;
 }
 
@@ -41,7 +40,6 @@ const PostList: React.FC = () => {
               fileName: post.name.replace(".md", ""),
               title: metadata.title || "제목 없음",
               date: metadata.date || "날짜 미정",
-              excerpt: metadata.excerpt, // 본문 미리보기
               content: content, // 전체 본문 내용 (HTML 변환 전)
             };
           }),
@@ -79,7 +77,7 @@ const PostList: React.FC = () => {
         {currentPosts.map((post) => (
           <article
             key={post.sha}
-            className="border-b border-gray-200 dark:border-gray-700 pb-12"
+            className="border-b border-gray-200 dark:border-gray-700 pb-8"
           >
             <Link to={`/post/${post.fileName}`} className="block">
               <h2 className="text-3xl font-bold mb-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -88,7 +86,6 @@ const PostList: React.FC = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 {post.date}
               </p>
-              <p className="text-gray-800 dark:text-gray-200">{post.excerpt}</p>
             </Link>
           </article>
         ))}

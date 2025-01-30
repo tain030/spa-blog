@@ -6,7 +6,6 @@ interface Post {
   sha: string;
   name: string;
   date: string;
-  excerpt: string;
   content: string;
 }
 
@@ -28,7 +27,6 @@ const PostDetail: React.FC = () => {
           sha: postName || "N/A",
           name: metadata.title || "Untitled",
           date: metadata.date || "Unknown date",
-          excerpt: content.slice(0, 100) + "...", // 미리보기
           content: content, // 변환된 HTML 본문
         });
         setLoading(false);
