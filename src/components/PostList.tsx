@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { fetchPostData } from "@/lib/utils";
 
 interface MetaPost {
@@ -14,7 +14,8 @@ const PostList: React.FC = () => {
   const [posts, setPosts] = useState<MetaPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get("page")) || 1;
   const postsPerPage = 5; // 한 페이지에 표시할 포스트 수
 
   useEffect(() => {
@@ -65,7 +66,9 @@ const PostList: React.FC = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) => {
+    setSearchParams({ page: pageNumber.toString() });
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -96,7 +99,7 @@ const PostList: React.FC = () => {
       </div>
 
       {/* 페이지네이션 버튼 */}
-      <div className="flex justify-center space-x-2 mt-6 pb-6">
+      <div className="flex justify-center space-x-2 mt-6">
         {[...Array(Math.ceil(posts.length / postsPerPage))].map((_, index) => (
           <button
             key={index}

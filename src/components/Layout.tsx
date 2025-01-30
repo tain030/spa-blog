@@ -22,8 +22,8 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   }, [darkMode]);
 
   return (
-    <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
-      <div className="flex">
+    <>
+      <main className="flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
         <Sidebar
           isOpen={isSidebarCollapsed}
           setIsOpen={setIsSidebarCollapsed}
@@ -42,12 +42,12 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             </button>
           </header>
 
-          <main className="mx-auto max-w-5xl pt-20 px-4 md:px-8 lg:px-16 space-y-12">
+          <section className="mx-auto max-w-5xl py-20 px-4 md:px-8 lg:px-16 space-y-12 h-full">
             {children}
-          </main>
+          </section>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
   );
 };
 
