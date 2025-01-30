@@ -13,7 +13,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative border-r border-gray-800 transition-all duration-300",
+        "fixed h-screen border-r border-gray-800 transition-all duration-300",
         isOpen ? "w-[72px]" : "w-60",
       )}
     >
@@ -49,7 +49,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       </nav>
 
       {!isOpen && (
-        <div className="absolute bottom-8 px-6 text-sm text-neutral-500">
+        <div className="absolute bottom-6 px-6 text-sm text-neutral-500">
           <div>Blockchain Developer</div>
         </div>
       )}

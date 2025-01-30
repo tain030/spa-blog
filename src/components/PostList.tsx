@@ -77,11 +77,11 @@ const PostList: React.FC = () => {
 
   return (
     <>
-      <div className="space-y-12">
+      <div className="space-y-8">
         {currentPosts.map((post) => (
           <article
             key={post.sha}
-            className="border-b border-gray-200 dark:border-gray-700 pb-8"
+            className="border-b border-gray-200 dark:border-gray-700 pb-4"
           >
             <Link to={`/post/${post.fileName}`} className="block">
               <h2 className="text-3xl font-bold mb-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
@@ -96,12 +96,12 @@ const PostList: React.FC = () => {
       </div>
 
       {/* 페이지네이션 버튼 */}
-      <div className="flex justify-center space-x-2 mt-6">
+      <div className="flex justify-center space-x-2 mt-6 pb-6">
         {[...Array(Math.ceil(posts.length / postsPerPage))].map((_, index) => (
           <button
             key={index}
             onClick={() => paginate(index + 1)}
-            className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-red-400 text-white" : "bg-gray-200"}`}
+            className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-red-400 text-white" : "bg-gray-400"}`}
           >
             {index + 1}
           </button>
