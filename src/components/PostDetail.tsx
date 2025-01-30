@@ -18,10 +18,12 @@ const PostDetail: React.FC = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        // 캐시를 무효화하기 위해 현재 시간을 쿼리 파라미터로 추가
+        const timestamp = new Date().getTime();
+        const url = `https://raw.githubusercontent.com/tain030/blog-post/main/posts/${postName}.md?timestamp=${timestamp}`;
+
         // Markdown 파일을 가져오고 처리하는 공통 함수 사용
-        const { metadata, content } = await fetchPostData(
-          `https://raw.githubusercontent.com/tain030/blog-post/main/posts/${postName}.md`,
-        );
+        const { metadata, content } = await fetchPostData(url);
 
         setPost({
           sha: postName || "N/A",
