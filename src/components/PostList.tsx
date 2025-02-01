@@ -7,6 +7,7 @@ interface MetaPost {
   fileName: string;
   title: string;
   date: string;
+  category: string;
   content: string;
 }
 
@@ -16,7 +17,8 @@ const PostList: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
-  const postsPerPage = 5; // 한 페이지에 표시할 포스트 수
+  const selectedCategory = searchParams.get("category") || null;
+  const postsPerPage = 5;
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,7 +31,6 @@ const PostList: React.FC = () => {
         }
         const data = await response.json();
 
-        // 포스트 메타데이터와 미리보기 생성
         const postsWithMetadata = await Promise.all(
           data.map(async (post: any) => {
             const { metadata, content } = await fetchPostData(
@@ -41,7 +42,8 @@ const PostList: React.FC = () => {
               fileName: post.name.replace(".md", ""),
               title: metadata.title || "제목 없음",
               date: metadata.date || "날짜 미정",
-              content: content, // 전체 본문 내용 (HTML 변환 전)
+              category: metadata.category || "Uncategorized",
+              content: content,
             };
           }),
         );
@@ -62,12 +64,20 @@ const PostList: React.FC = () => {
     fetchPosts();
   }, []);
 
+  // 선택된 카테고리에 맞는 포스트 필터링
+  const filteredPosts = selectedCategory
+    ? posts.filter((post) => post.category === selectedCategory)
+    : posts;
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
   const paginate = (pageNumber: number) => {
-    setSearchParams({ page: pageNumber.toString() });
+    setSearchParams({
+      page: pageNumber.toString(),
+      category: selectedCategory || "",
+    });
   };
 
   if (loading) {
@@ -81,34 +91,40 @@ const PostList: React.FC = () => {
   return (
     <>
       <div className="space-y-8">
-        {currentPosts.map((post) => (
-          <article
-            key={post.sha}
-            className="border-b border-gray-200 dark:border-gray-700 pb-4"
-          >
-            <Link to={`/post/${post.fileName}`} className="block">
-              <h2 className="text-3xl font-bold mb-4 hover:text-primary dark:hover:text-primary transition-colors">
-                {post.title}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">
-                {post.date}
-              </p>
-            </Link>
-          </article>
-        ))}
+        {currentPosts.length > 0 ? (
+          currentPosts.map((post) => (
+            <article
+              key={post.sha}
+              className="border-b border-gray-200 dark:border-gray-700 pb-4"
+            >
+              <Link to={`/post/${post.fileName}`} className="block">
+                <h2 className="text-3xl font-bold mb-4 hover:text-primary dark:hover:text-primary transition-colors">
+                  {post.title}
+                </h2>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">
+                  {post.date}
+                </p>
+              </Link>
+            </article>
+          ))
+        ) : (
+          <p>선택한 카테고리에 해당하는 게시물이 없습니다.</p>
+        )}
       </div>
 
-      {/* 페이지네이션 버튼 */}
+      {/* 페이지네이션 */}
       <div className="flex justify-center space-x-2 mt-6">
-        {[...Array(Math.ceil(posts.length / postsPerPage))].map((_, index) => (
-          <button
-            key={index}
-            onClick={() => paginate(index + 1)}
-            className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-primary text-white" : "bg-secondary"}`}
-          >
-            {index + 1}
-          </button>
-        ))}
+        {[...Array(Math.ceil(filteredPosts.length / postsPerPage))].map(
+          (_, index) => (
+            <button
+              key={index}
+              onClick={() => paginate(index + 1)}
+              className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-primary text-white" : "bg-secondary"}`}
+            >
+              {index + 1}
+            </button>
+          ),
+        )}
       </div>
     </>
   );

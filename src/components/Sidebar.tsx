@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { Home, Compass, Settings, HelpCircle, ChevronLeft } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,14 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
+  const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+
+  const handleCategoryClick = (category: string) => {
+    setSearchParams({ category });
+    navigate(`/?category=${category}`);
+  };
+
   return (
     <div
       className={cn(
@@ -37,15 +45,27 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <NavItem href="/" icon={Home} collapsed={isOpen}>
           Home
         </NavItem>
-        <NavItem href="#" icon={Compass} collapsed={isOpen}>
-          Rust
-        </NavItem>
-        <NavItem href="#" icon={Settings} collapsed={isOpen}>
-          Blockchain
-        </NavItem>
-        <NavItem href="#" icon={HelpCircle} collapsed={isOpen}>
-          Computer
-        </NavItem>
+        <button onClick={() => handleCategoryClick("rust")} className="w-full">
+          <NavItem href="#" icon={Compass} collapsed={isOpen}>
+            Rust
+          </NavItem>
+        </button>
+        <button
+          onClick={() => handleCategoryClick("blockchain")}
+          className="w-full"
+        >
+          <NavItem href="#" icon={Settings} collapsed={isOpen}>
+            Blockchain
+          </NavItem>
+        </button>
+        <button
+          onClick={() => handleCategoryClick("computer")}
+          className="w-full"
+        >
+          <NavItem href="#" icon={HelpCircle} collapsed={isOpen}>
+            Computer
+          </NavItem>
+        </button>
       </nav>
 
       {!isOpen && (
