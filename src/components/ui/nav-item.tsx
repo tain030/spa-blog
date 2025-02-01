@@ -24,7 +24,7 @@ export default function NavItem({
       <Link
         to={href}
         className={cn(
-          "flex items-center gap-3 px-3 py-2 hover:bg-gray-400 rounded-lg transition-colors text-sm",
+          "flex items-center gap-3 px-3 py-2 hover:bg-accent rounded-lg transition-colors text-sm",
           collapsed && "justify-center",
         )}
         title={collapsed ? String(children) : undefined}

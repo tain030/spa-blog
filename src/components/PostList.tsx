@@ -87,7 +87,7 @@ const PostList: React.FC = () => {
             className="border-b border-gray-200 dark:border-gray-700 pb-4"
           >
             <Link to={`/post/${post.fileName}`} className="block">
-              <h2 className="text-3xl font-bold mb-4 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+              <h2 className="text-3xl font-bold mb-4 hover:text-primary dark:hover:text-primary transition-colors">
                 {post.title}
               </h2>
               <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -104,7 +104,7 @@ const PostList: React.FC = () => {
           <button
             key={index}
             onClick={() => paginate(index + 1)}
-            className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-red-400 text-white" : "bg-gray-400"}`}
+            className={`px-4 py-2 rounded-md ${currentPage === index + 1 ? "bg-primary text-white" : "bg-secondary"}`}
           >
             {index + 1}
           </button>

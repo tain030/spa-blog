@@ -13,14 +13,14 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
   return (
     <div
       className={cn(
-        "fixed h-screen border-r border-gray-800 transition-all duration-300",
+        "fixed h-screen border-r border-border transition-all duration-300",
         isOpen ? "w-[72px]" : "w-60",
       )}
     >
       <Button
         variant="default"
         size="icon"
-        className="absolute -right-2.5 top-10 z-10 h-6 w-6 rounded-full border border-muted-foreground-200 bg-gray-800 hover:bg-gray-400"
+        className="absolute -right-2.5 top-10 z-10 h-6 w-6 rounded-full border border-border bg-gray-800 hover:bg-accent"
         onClick={() => setIsOpen(!isOpen)}
       >
         <ChevronLeft

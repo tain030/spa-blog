@@ -23,7 +23,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <>
-      <main className="flex bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
+      <main className="flex bg-background dark:bg-background text-foreground dark:text-foreground transition-colors duration-300 min-h-screen">
         <Sidebar
           isOpen={isSidebarCollapsed}
           setIsOpen={setIsSidebarCollapsed}
@@ -32,7 +32,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           <header className="fixed top-0 right-0 p-4 flex justify-end items-center z-10">
             <button
               onClick={() => setDarkMode(!darkMode)}
-              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300"
+              className="p-2 rounded-full hover:bg-accent dark:hover:bg-accent transition-colors duration-300"
             >
               {darkMode ? (
                 <Sun className="w-6 h-6" />
