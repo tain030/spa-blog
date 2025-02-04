@@ -10,7 +10,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const [darkMode, setDarkMode] = useState(
     () => localStorage.getItem("darkMode") === "true",
   );
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // 기본값 true (데스크탑 고려)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   useEffect(() => {
     if (darkMode) {
@@ -35,12 +35,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         />
       )}
 
-      {/* 본문 (데스크탑에서는 사이드바 상태에 따라 크기 조정) */}
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          isSidebarOpen ? "md:ml-60" : "md:ml-[72px]"
-        }`}
-      >
+      <div className="flex-1 duration-300">
         {/* 헤더 */}
         <header className="fixed top-0 right-0 p-4 flex justify-between items-center w-full z-10">
           {/* 모바일에서만 보이는 사이드바 열기 버튼 */}
@@ -49,19 +44,19 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
               onClick={() => setIsSidebarOpen(true)}
               className="md:hidden p-2 bg-background text-foreground"
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5" />
             </button>
           )}
 
           {/* 다크 모드 토글 버튼 */}
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className="p-2 rounded-full hover:bg-accent dark:hover:bg-accent transition-colors duration-300"
+            className="p-2 rounded-full hover:bg-accent dark:hover:bg-accent transition-colors duration-300 ml-auto"
           >
             {darkMode ? (
-              <Sun className="w-6 h-6" />
+              <Sun className="w-5 h-5" />
             ) : (
-              <Moon className="w-6 h-6" />
+              <Moon className="w-5 h-5" />
             )}
           </button>
         </header>

@@ -40,7 +40,7 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
         <Button
           variant="default"
           size="icon"
-          className="absolute -right-2.5 top-10 z-10 h-6 w-6 rounded-full border border-border bg-background hover:bg-accent"
+          className="absolute -right-2.5 top-10 z-10 h-6 w-6 rounded-full border border-border bg-primary hover:bg-accent"
           onClick={() => setIsOpen(!isOpen)}
         >
           <ChevronLeft className={cn("h-4 w-4 transition-transform")} />
