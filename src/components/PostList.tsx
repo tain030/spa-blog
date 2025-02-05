@@ -95,7 +95,7 @@ const PostList: React.FC = () => {
           currentPosts.map((post) => (
             <article
               key={post.sha}
-              className="border-b border-gray-200 dark:border-gray-700 pb-4"
+              className="border-b border-border dark:border-border pb-4"
             >
               <Link to={`/post/${post.fileName}`} className="block">
                 <h2 className="text-3xl font-bold mb-4 hover:text-primary dark:hover:text-primary transition-colors">

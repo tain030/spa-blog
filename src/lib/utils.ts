@@ -1,8 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { remark } from "remark";
-import html from "remark-html";
-import gfm from "remark-gfm";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import remarkImages from "remark-images";
+import remarkGemoji from "remark-gemoji";
+import remarkRehype from "remark-rehype";
+import rehypeHighlight from "rehype-highlight";
+import rehypeStringify from "rehype-stringify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -58,9 +63,14 @@ export const fetchPostData = async (url: string): Promise<PostData> => {
   const markdown = await response.text();
   const { metadata, content } = extractMetadata(markdown);
 
-  const processedContent = await remark()
-    .use(gfm) // GFM 플러그인 추가
-    .use(html)
+  const processedContent = await unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkImages)
+    .use(remarkGemoji)
+    .use(remarkRehype)
+    .use(rehypeHighlight, { detect: true })
+    .use(rehypeStringify)
     .process(content);
 
   const result: PostData = {
